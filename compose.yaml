@@ -1,0 +1,39 @@
+# The Shop system with Docker. Expects the service repos cloned next to this one.
+# Without Docker use: node scripts/up.mjs
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: orders
+      POSTGRES_PASSWORD: orders-demo-only
+    ports: ["5432:5432"]
+  pricing:
+    image: node:24
+    working_dir: /app
+    volumes: ["../shop-pricing:/app"]
+    command: sh -c "npm ci && npm start"
+    ports: ["8082:8082"]
+  orders:
+    image: eclipse-temurin:21
+    working_dir: /app
+    volumes: ["../shop-orders:/app"]
+    command: ./gradlew bootRun --console=plain
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      DB_URL: jdbc:postgresql://db:5432/orders
+      DB_USER: orders
+      DB_PASSWORD: orders-demo-only
+      PRICING_BASE_URL: http://pricing:8082
+    ports: ["8081:8081"]
+    depends_on: [db, pricing]
+  web:
+    image: node:24
+    working_dir: /app
+    volumes: ["../shop-web:/app"]
+    command: sh -c "npm ci && npm run build && npm start"
+    environment:
+      PRICING_URL: http://pricing:8082
+      ORDERS_URL: http://orders:8081
+    ports: ["3001:3001"]
+    depends_on: [pricing, orders]
