@@ -4,7 +4,7 @@
     "shop-harness": {
       "source": {
         "source": "github",
-        "repo": "koldovsky/shop-harness",
+        "repo": "koldovsky/2026-spd-shop-harness",
         "ref": "v1.5.0"
       }
     }

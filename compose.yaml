@@ -11,13 +11,13 @@ services:
   pricing:
     image: node:24
     working_dir: /app
-    volumes: ["../shop-pricing:/app"]
+    volumes: ["../2026-spd-shop-pricing:/app"]
     command: sh -c "npm ci && npm start"
     ports: ["8082:8082"]
   orders:
     image: eclipse-temurin:21
     working_dir: /app
-    volumes: ["../shop-orders:/app"]
+    volumes: ["../2026-spd-shop-orders:/app"]
     command: ./gradlew bootRun --console=plain
     environment:
       SPRING_PROFILES_ACTIVE: postgres
@@ -30,7 +30,7 @@ services:
   web:
     image: node:24
     working_dir: /app
-    volumes: ["../shop-web:/app"]
+    volumes: ["../2026-spd-shop-web:/app"]
     command: sh -c "npm ci && npm run build && npm start"
     environment:
       PRICING_URL: http://pricing:8082

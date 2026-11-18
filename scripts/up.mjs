@@ -1,14 +1,14 @@
 // Runs the Shop system locally without Docker: pricing :8082, orders :8081, web :3001.
-// Usage (from shop-workspace): node scripts/up.mjs   — Ctrl+C stops everything.
+// Usage (from 2026-spd-shop-workspace): node scripts/up.mjs   — Ctrl+C stops everything.
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 const win = process.platform === "win32";
 const services = [
-  { name: "pricing", dir: "../shop-pricing", cmd: "npm", args: ["run", "dev"] },
-  { name: "orders", dir: "../shop-orders", cmd: win ? "gradlew.bat" : "./gradlew", args: ["bootRun", "--console=plain"] },
-  { name: "web", dir: "../shop-web", cmd: "npm", args: ["run", "dev"] },
+  { name: "pricing", dir: "../2026-spd-shop-pricing", cmd: "npm", args: ["run", "dev"] },
+  { name: "orders", dir: "../2026-spd-shop-orders", cmd: win ? "gradlew.bat" : "./gradlew", args: ["bootRun", "--console=plain"] },
+  { name: "web", dir: "../2026-spd-shop-web", cmd: "npm", args: ["run", "dev"] },
 ];
 const children = [];
 for (const s of services) {
