@@ -36,11 +36,11 @@ evidence commits add `Evidence: <file>`, and merge commits add `Accountable:`.
 | Rounding trap, SEEDED red (closed, not merged) | Go [#19](https://github.com/koldovsky/2026-spd-shop-pricing/pull/19), tags [`price-42-go-seeded`](https://github.com/koldovsky/2026-spd-shop-pricing/tree/price-42-go-seeded), [`price-42-go-seeded-oracle`](https://github.com/koldovsky/2026-spd-shop-pricing/tree/price-42-go-seeded-oracle) · Kotlin [#21](https://github.com/koldovsky/2026-spd-shop-pricing/pull/21), tag [`price-42-kotlin-seeded`](https://github.com/koldovsky/2026-spd-shop-pricing/tree/price-42-kotlin-seeded) | Go red at `go test` [45240621161](https://github.com/koldovsky/2026-spd-shop-pricing/actions/runs/45240621161), at the oracle corpus step [45240838007](https://github.com/koldovsky/2026-spd-shop-pricing/actions/runs/45240838007); Kotlin red at build [45241985376](https://github.com/koldovsky/2026-spd-shop-pricing/actions/runs/45241985376) |
 | Benchmark, TS vs Kotlin vs Go | [#23](https://github.com/koldovsky/2026-spd-shop-pricing/pull/23), merge `e51f047` | trace+size [45245462084](https://github.com/koldovsky/2026-spd-shop-pricing/actions/runs/45245462084) |
 | Negative path: no key, no trailers, 450 lines | [#2](https://github.com/koldovsky/2026-spd-shop-pricing/pull/2), closed | both gates red [45228454506](https://github.com/koldovsky/2026-spd-shop-pricing/actions/runs/45228454506) |
-| Cutover: this switch and ADR-008 | workspace [#3](https://github.com/koldovsky/2026-spd-shop-workspace/pull/3), open for the accountable person | runs listed on the PR |
+| Cutover: this switch and ADR-008 | workspace [#3](https://github.com/koldovsky/2026-spd-shop-workspace/pull/3), opened by Claude Code and left for the accountable person to review and merge | runs listed on the PR |
 
 **Who judged.** Every pricing PR above was opened and merged by Claude Code under the 23.11 permission, without a
 separate human review; each merge commit says so in its `Accountable: @koldovsky (…)` trailer. No commit claims
-`Reviewed-by:`. The cutover PR is the first in this chain left for a human to review and merge.
+`Reviewed-by:`. The cutover PR (#3) was left for a human to review and merge; its merge is the first human judgement in this chain.
 
 ## 3. Evidence files (commands, outputs, exit codes, verified SHA)
 
@@ -67,5 +67,4 @@ go version -m 2026-spd-shop-pricing/go/pricing.exe
 ```
 
 `gh pr checks 17` exits 1: the Kotlin parity workflow also ran on that Go PR and was red (it does not build `go/`;
-the PR has a comment saying so). Keep PR searches scoped to one repo and to titles (`-R <repo>`, `in:title`). An account-wide `gh search prs PRICE-42`
-without `--match title` also lists unrelated repos of the same account.
+the PR has a comment saying so). Keep PR searches scoped to one repo and to titles (`-R <repo>`, `in:title`).
