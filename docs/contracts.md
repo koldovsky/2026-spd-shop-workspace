@@ -4,6 +4,8 @@ All money is **integer cents**. Prices are computed only by shop-pricing.
 
 ## pricing
 
+Full contract: [`contracts/openapi.yaml`](https://github.com/koldovsky/2026-spd-shop-pricing/blob/main/contracts/openapi.yaml) in shop-pricing (PRICE-42); the golden corpus there pins exact responses.
+
 | Method | Path | Request | Response |
 |---|---|---|---|
 | GET | `/catalog` | — | `[{ sku, name }]` |
