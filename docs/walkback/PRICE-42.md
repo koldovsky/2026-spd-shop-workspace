@@ -59,9 +59,13 @@ From a folder with both repos cloned side by side. Each command is one line (Pow
 git -C 2026-spd-shop-pricing log --oneline --grep PRICE-42
 git -C 2026-spd-shop-pricing log -3 "--format=%h %s%n%(trailers)" 69f021c
 git -C 2026-spd-shop-pricing log --merges --grep PRICE-42 "--format=%h %s | %(trailers:key=Accountable,valueonly)"
-gh pr list -R koldovsky/2026-spd-shop-pricing --state all --search PRICE-42 --limit 50
-gh pr list -R koldovsky/2026-spd-shop-workspace --state all --search PRICE-42
+gh pr list -R koldovsky/2026-spd-shop-pricing --state all --search "PRICE-42 in:title" --limit 50
+gh pr list -R koldovsky/2026-spd-shop-workspace --state all --search "PRICE-42 in:title"
 gh pr checks 17 -R koldovsky/2026-spd-shop-pricing
 gh run view 45240838007 -R koldovsky/2026-spd-shop-pricing
 go version -m 2026-spd-shop-pricing/go/pricing.exe
 ```
+
+`gh pr checks 17` exits 1: the Kotlin parity workflow also ran on that Go PR and was red (it does not build `go/`;
+the PR has a comment saying so). Keep PR searches scoped to one repo and to titles (`-R <repo>`, `in:title`). An account-wide `gh search prs PRICE-42`
+without `--match title` also lists unrelated repos of the same account.
