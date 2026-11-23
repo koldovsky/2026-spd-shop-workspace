@@ -1,6 +1,6 @@
 # PRICE-42 evidence: the pricing implementation switch (cutover)
 
-**Verified revision:** workspace `21bd0c3ae985eb19ec728ec319b4cef6102dc1a7` (branch `PRICE-42-cutover`), with the sibling
+**Verified revision:** workspace `5f841dd841d0784c0166164f7d3f5bc07d8abff7` (branch `PRICE-42-cutover`), with the sibling
 pricing checkout at `e51f047a768ff441329519afece0526ab366b0d5` (pricing `main` after PR #23). Only this file changed after it.
 
 ## Setup
@@ -41,18 +41,18 @@ exit code: 64
 
 ## Raw output
 
-workspace HEAD: 21bd0c3ae985eb19ec728ec319b4cef6102dc1a7 (clean)
+workspace HEAD: 5f841dd841d0784c0166164f7d3f5bc07d8abff7 (clean)
 pricing HEAD: e51f047a768ff441329519afece0526ab366b0d5 (git status --porcelain: "")
 go/pricing.exe stamp: build vcs.revision=e51f047a768ff441329519afece0526ab366b0d5; build vcs.modified=false
 
 ### default (no flag, no env)
 
 ```text
-$ node scripts/up.mjs --only pricing --pricing-port 8281            # cwd: workspace; GET /catalog 200: true, after 299 ms
+$ node scripts/up.mjs --only pricing --pricing-port 8281            # cwd: workspace; GET /catalog 200: true, after 290 ms
 [pricing] impl=ts revision=e51f047 cmd="C:\Program Files\nodejs\node.exe dist/server.js" url=http://localhost:8281
-[pricing] pid=55196
+[pricing] pid=72720
 [pricing] shop-pricing on :8281
-listening on :8281: PID 55196 node C:\Program Files\nodejs\node.exe
+listening on :8281: PID 72720 node C:\Program Files\nodejs\node.exe
 $ node parity/check.mjs --base http://localhost:8281            # cwd: pricing checkout
 parity:check target=http://localhost:8281
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -61,17 +61,17 @@ gating: 130/130 passed
 quirks (not gating): 6/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 44412 /T /F   -> service PID 55196: gone; port 8281 afterwards: free
+$ taskkill /PID 36260 /T /F   -> service PID 72720: gone; port 8281 afterwards: free
 ```
 
 ### --pricing-impl ts
 
 ```text
-$ node scripts/up.mjs --only pricing --pricing-port 8282 --pricing-impl ts            # cwd: workspace; GET /catalog 200: true, after 272 ms
+$ node scripts/up.mjs --only pricing --pricing-port 8282 --pricing-impl ts            # cwd: workspace; GET /catalog 200: true, after 264 ms
 [pricing] impl=ts revision=e51f047 cmd="C:\Program Files\nodejs\node.exe dist/server.js" url=http://localhost:8282
-[pricing] pid=86072
+[pricing] pid=77976
 [pricing] shop-pricing on :8282
-listening on :8282: PID 86072 node C:\Program Files\nodejs\node.exe
+listening on :8282: PID 77976 node C:\Program Files\nodejs\node.exe
 $ node parity/check.mjs --base http://localhost:8282            # cwd: pricing checkout
 parity:check target=http://localhost:8282
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -80,17 +80,17 @@ gating: 130/130 passed
 quirks (not gating): 6/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 67288 /T /F   -> service PID 86072: gone; port 8282 afterwards: free
+$ taskkill /PID 43244 /T /F   -> service PID 77976: gone; port 8282 afterwards: free
 ```
 
 ### --pricing-impl go
 
 ```text
-$ node scripts/up.mjs --only pricing --pricing-port 8283 --pricing-impl go            # cwd: workspace; GET /catalog 200: true, after 259 ms
+$ node scripts/up.mjs --only pricing --pricing-port 8283 --pricing-impl go            # cwd: workspace; GET /catalog 200: true, after 263 ms
 [pricing] impl=go revision=e51f047 cmd="D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe" url=http://localhost:8283
-[pricing] pid=70620
-[pricing] 2026/11/23 21:35:20 shop-pricing on :8283
-listening on :8283: PID 70620 pricing D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe
+[pricing] pid=71896
+[pricing] 2026/11/23 21:48:52 shop-pricing on :8283
+listening on :8283: PID 71896 pricing D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe
 $ node parity/check.mjs --base http://localhost:8283            # cwd: pricing checkout
 parity:check target=http://localhost:8283
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -111,17 +111,17 @@ gating: 130/130 passed
 quirks (not gating): 0/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 79612 /T /F   -> service PID 70620: gone; port 8283 afterwards: free
+$ taskkill /PID 77012 /T /F   -> service PID 71896: gone; port 8283 afterwards: free
 ```
 
 ### --pricing-impl kotlin
 
 ```text
-$ node scripts/up.mjs --only pricing --pricing-port 8284 --pricing-impl kotlin            # cwd: workspace; GET /catalog 200: true, after 313 ms
+$ node scripts/up.mjs --only pricing --pricing-port 8284 --pricing-impl kotlin            # cwd: workspace; GET /catalog 200: true, after 300 ms
 [pricing] impl=kotlin revision=e51f047 cmd="java -jar kotlin/build/libs/pricing.jar" url=http://localhost:8284
-[pricing] pid=38168
+[pricing] pid=39248
 [pricing] shop-pricing (kotlin) listening on :8284
-listening on :8284: PID 38168 java C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\java.exe
+listening on :8284: PID 39248 java C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\java.exe
 $ node parity/check.mjs --base http://localhost:8284            # cwd: pricing checkout
 parity:check target=http://localhost:8284
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -138,17 +138,17 @@ gating: 130/130 passed
 quirks (not gating): 2/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 42652 /T /F   -> service PID 38168: gone; port 8284 afterwards: free
+$ taskkill /PID 78132 /T /F   -> service PID 39248: gone; port 8284 afterwards: free
 ```
 
 ### env PRICING_IMPL=go
 
 ```text
-$ PRICING_IMPL=go node scripts/up.mjs --only pricing --pricing-port 8285            # cwd: workspace; GET /catalog 200: true, after 267 ms
+$ PRICING_IMPL=go node scripts/up.mjs --only pricing --pricing-port 8285            # cwd: workspace; GET /catalog 200: true, after 258 ms
 [pricing] impl=go revision=e51f047 cmd="D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe" url=http://localhost:8285
-[pricing] pid=86256
-[pricing] 2026/11/23 21:35:29 shop-pricing on :8285
-listening on :8285: PID 86256 pricing D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe
+[pricing] pid=86136
+[pricing] 2026/11/23 21:49:01 shop-pricing on :8285
+listening on :8285: PID 86136 pricing D:\demo-s2\2026-spd-shop-pricing\go\pricing.exe
 $ node parity/check.mjs --base http://localhost:8285            # cwd: pricing checkout
 parity:check target=http://localhost:8285
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -169,17 +169,17 @@ gating: 130/130 passed
 quirks (not gating): 0/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 89904 /T /F   -> service PID 86256: gone; port 8285 afterwards: free
+$ taskkill /PID 44412 /T /F   -> service PID 86136: gone; port 8285 afterwards: free
 ```
 
 ### env PRICING_IMPL=kotlin
 
 ```text
-$ PRICING_IMPL=kotlin node scripts/up.mjs --only pricing --pricing-port 8286            # cwd: workspace; GET /catalog 200: true, after 304 ms
+$ PRICING_IMPL=kotlin node scripts/up.mjs --only pricing --pricing-port 8286            # cwd: workspace; GET /catalog 200: true, after 299 ms
 [pricing] impl=kotlin revision=e51f047 cmd="java -jar kotlin/build/libs/pricing.jar" url=http://localhost:8286
-[pricing] pid=24096
+[pricing] pid=55740
 [pricing] shop-pricing (kotlin) listening on :8286
-listening on :8286: PID 24096 java C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\java.exe
+listening on :8286: PID 55740 java C:\Program Files\Microsoft\jdk-21.0.12.101-hotspot\bin\java.exe
 $ node parity/check.mjs --base http://localhost:8286            # cwd: pricing checkout
 parity:check target=http://localhost:8286
 corpus D:\demo-s2\2026-spd-shop-pricing\parity\corpus\corpus.json sha256=0211ef856e503d89… recorded from http://localhost:8082 at 25f3e2b940ad
@@ -196,12 +196,15 @@ gating: 130/130 passed
 quirks (not gating): 2/6 same as reference
 RESULT: PASS
 exit code: 0
-$ taskkill /PID 44524 /T /F   -> service PID 24096: gone; port 8286 afterwards: free
+$ taskkill /PID 34732 /T /F   -> service PID 55740: gone; port 8286 afterwards: free
 ```
 
 ## Not verified
 
-- web and orders were not started against the Go or Kotlin build (`--only pricing` in every run).
+- web and orders were not started against the Go or Kotlin build (`--only pricing` in every run), and a full
+  `node scripts/up.mjs` (all three services, including the changed orders/web spawn and stop path) was not run.
+- Ctrl+C was checked separately in a PowerShell 5.1 console and in Git Bash's bash.exe in a console: the Go service
+  stopped and its port was freed. Not checked in mintty.
 - Linux and macOS (`go/pricing` without `.exe`, `kotlin/gradlew`): the code path exists, not run.
 - `contract.mjs`, `blackbox/run.mjs` and `diff.mjs` were not re-run here; they ran on the merged builds (pricing evidence
   `go-5-contract-blackbox.md`, `kotlin-parity.md`, `bench-final/parity-at-904a685.txt`).
