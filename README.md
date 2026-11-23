@@ -32,4 +32,7 @@ node scripts/up.mjs
 | Demo ticket | `tickets/SHOP-118.md` |
 | Shared harness | `koldovsky/2026-spd-shop-harness`, enabled in `.claude/settings.json` |
 
-`compose.yaml` is for Docker users and wasn't tested on the presenter's machine; `scripts/up.mjs` needs only Node 22.13+ and JDK 21.
+`scripts/up.mjs` needs only Node 22.13+ and JDK 21, and starts pricing from its build output: run `npm ci` and
+`npm run build` in `2026-spd-shop-pricing` first. `PRICING_IMPL=ts|go|kotlin` (or `--pricing-impl`) picks the TS, Go or
+Kotlin build (ADR-008); `--only pricing` starts just that service. `compose.yaml` is for Docker users and wasn't tested
+on the presenter's machine.

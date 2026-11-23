@@ -1,0 +1,21 @@
+# Copied from 2026-spd-shop-harness templates/pr-gates.yml (v1.6.1). Rules: docs/gates.md in 2026-spd-shop-harness.
+# Pinned to @v1.6.1. harness-ref is passed too, because the reusable workflows at v1.6.1 still default it to v1.6.0
+# (the ci/ scripts are identical in both tags). Bump the tag by PR, like the plugin pin in .claude/settings.json.
+name: PR gates
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+permissions:
+  contents: read
+jobs:
+  trace:
+    uses: koldovsky/2026-spd-shop-harness/.github/workflows/trace-gate.yml@v1.6.1
+    with:
+      harness-ref: v1.6.1
+    #   key-pattern: 'PRICE-[0-9]+'
+  size:
+    uses: koldovsky/2026-spd-shop-harness/.github/workflows/diff-size.yml@v1.6.1
+    with:
+      harness-ref: v1.6.1
+    #   fail: 400
+    #   exclude: 'parity/corpus/**'
